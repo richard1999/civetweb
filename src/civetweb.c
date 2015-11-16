@@ -2389,6 +2389,7 @@ int mg_write(struct mg_connection *conn, const void *buf, size_t len)
         total = push(NULL, conn->client.sock, conn->ssl, (const char *) buf,
                      (int64_t) len);
     }
+    conn->num_bytes_sent += total;
     return (int) total;
 }
 
