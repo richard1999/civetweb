@@ -6074,10 +6074,11 @@ static void log_access(const struct mg_connection *conn)
     referer = header_val(conn, "Referer");
     user_agent = header_val(conn, "User-Agent");
 
-    snprintf(buf, sizeof(buf), "%s - %s [%s] \"%s %s HTTP/%s\" %d %" INT64_FMT " %s %s",
+    snprintf(buf, sizeof(buf), "%s - %s [%s] \"%s %s%s%s HTTP/%s\" %d %" INT64_FMT " %s %s",
             src_addr, ri->remote_user == NULL ? "-" : ri->remote_user, date,
             ri->request_method ? ri->request_method : "-",
-            ri->uri ? ri->uri : "-", ri->http_version,
+            ri->uri ? ri->uri : "-", ri->query_string ? "?" : "",
+            ri->query_string ? ri->query_string : "", ri->http_version,
             conn->status_code, conn->num_bytes_sent,
 	    referer, user_agent);
 
